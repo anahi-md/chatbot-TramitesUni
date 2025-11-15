@@ -1,9 +1,9 @@
 import random
-# import pickle  # <- se usará en el futuro cuando carguemos modelo.pkl
+# import pickle  # ← se usará cuando A genere modelo.pkl
 
 
 # ============================================================
-#   RESPUESTAS FALSAS (SIMULACIÓN DE CHATBOT UAdeC)
+#   RESPUESTAS FALSAS (SIMULACIÓN CHATBOT UAdeC)
 # ============================================================
 FAKE_INTENTS = {
     "saludo": [
@@ -15,132 +15,129 @@ FAKE_INTENTS = {
         "Gracias por usar el asistente de la Universidad Autónoma de Coahuila. ¡Que tengas un excelente día!"
     ],
     "pago_semestre": [
-        "Para pagar tu semestre en la UAdeC, normalmente debes entrar al portal de alumnos, generar tu ficha de pago y acudir al banco o hacer pago en línea. Verifica siempre las fechas límite en el calendario escolar.",
-        "El pago de semestre se realiza generando la referencia de pago en el sistema de la UAdeC y cubriéndola en los bancos autorizados o en línea. Si tienes dudas específicas, te recomiendo contactar a Escolar o Finanzas."
+        "Para pagar tu semestre en la UAdeC, debes entrar al portal de alumnos, generar tu ficha de pago y cubrirla en línea o en bancos autorizados.",
+        "El pago de reinscripción o semestre se realiza generando la referencia en el sistema de la UAdeC. Consulta siempre fechas y montos actualizados."
     ],
     "solicitar_creditos_educativos": [
-        "Los créditos educativos suelen gestionarse a través del área de Servicios Estudiantiles o Finanzas. Revisa los requisitos en la página de la UAdeC o pregunta por los convenios de crédito y becas.",
-        "Para solicitar créditos educativos, consulta primero la convocatoria vigente y junta documentos como historial académico, identificación y comprobante de ingresos. Después se entrega la solicitud en el departamento correspondiente."
+        "Para créditos educativos, revisa la convocatoria vigente en Servicios Estudiantiles. Ahí verás requisitos y documentos.",
+        "Los créditos educativos se solicitan en el área correspondiente dentro de la UAdeC. Prepara documentación como historial académico e identificación."
     ],
     "pago_cuota_mantenimiento": [
-        "La cuota de mantenimiento normalmente se incluye en tu estado de cuenta o se genera como concepto aparte en el portal de pagos. Revisa tu referencia de pago y asegúrate de cubrirla antes de la fecha límite.",
-        "Para pagar la cuota de mantenimiento, verifica en tu estado de cuenta el concepto y el monto exacto. Después puedes pagarlo en los bancos autorizados o mediante pago en línea según indique la UAdeC."
+        "La cuota de mantenimiento aparece en tu estado de cuenta. Puedes pagarla en línea o en los bancos autorizados.",
+        "Para pagar la cuota de mantenimiento, revisa tu estado de cuenta en el portal UAdeC y cubre el monto antes de la fecha límite."
     ],
     "consulta_estado_cuenta": [
-        "Para consultar tu estado de cuenta, entra al portal de alumnos de la UAdeC con tu matrícula y revisa la sección de Finanzas o Pagos. Ahí verás los cargos pendientes y los pagos registrados.",
-        "Tu estado de cuenta se visualiza normalmente en el sistema de la UAdeC, en el apartado de pagos. Si no puedes acceder, acude a Escolar o Finanzas para que te apoyen."
+        "Tu estado de cuenta se consulta en el portal de alumnos, en la sección de Finanzas. Ahí verás cargos y pagos.",
+        "Para revisar tu estado de cuenta, entra al sistema UAdeC con tu matrícula y accede a la sección de Pagos."
     ],
     "ayuda_horario": [
-        "Para la selección de horario, revisa primero el calendario de reinscripción y las materias ofertadas. Después, en el sistema de la UAdeC, podrás elegir grupos según tu avance y disponibilidad.",
-        "La selección de horario se hace en línea, en las fechas indicadas por la UAdeC. Te recomiendo tener un horario tentativo con varias opciones de grupo por si alguno aparece lleno."
+        "La selección de horario se hace en línea, en las fechas señaladas por la UAdeC. Revisa la oferta de materias antes.",
+        "Para inscribir materias, verifica las fechas de reinscripción y consulta disponibilidad de grupos en el portal UAdeC."
     ],
     "consulta_calendario_escolar": [
-        "El calendario escolar de la UAdeC está disponible en la página oficial. Ahí encontrarás fechas de inscripciones, pagos, inicios de semestre, exámenes y vacaciones.",
-        "Puedes consultar el calendario escolar buscando en la página de la Universidad Autónoma de Coahuila la sección de 'Calendario escolar' o 'Fechas importantes'."
+        "Puedes consultar el calendario escolar en la página oficial de la UAdeC, sección de Fechas importantes.",
+        "El calendario escolar incluye pagos, exámenes e inicios de semestre. Está disponible en la web oficial de la UAdeC."
     ],
     "consulta_creditos_escolares": [
-        "Para revisar tus créditos escolares, entra al portal de alumnos y consulta tu historial académico o tu avance de plan de estudios. Ahí verás cuántos créditos llevas y cuántos te faltan.",
-        "Tus créditos acumulados se muestran en tu historial académico dentro del sistema de la UAdeC. Si ves algo raro, acude con Escolar para aclararlo."
+        "Tus créditos escolares están en tu historial académico dentro del portal de alumnos.",
+        "Para ver tus créditos acumulados, entra al sistema UAdeC y consulta tu avance del plan de estudios."
     ],
     "info_contacto_escolar": [
-        "Para contactar al departamento escolar, revisa la página de tu facultad dentro de la UAdeC. Normalmente ahí aparecen correos, teléfonos y horarios de atención.",
-        "Puedes comunicarte con Escolar mediante los teléfonos y correos oficiales publicados por la UAdeC. Te recomiendo anotar el correo institucional de tu facultad para futuras dudas."
+        "Puedes contactar al departamento escolar mediante los correos y teléfonos oficiales listados en tu facultad.",
+        "Para atención escolar, revisa el directorio de tu facultad en la página de la UAdeC. Ahí están los correos institucionales."
     ],
     "ayuda_general": [
-        "Puedo ayudarte con trámites como pago de semestre, créditos educativos, cuota de mantenimiento, estado de cuenta, horarios, calendario y créditos escolares. Intenta preguntar algo específico 😉.",
-        "Soy el asistente de trámites de la UAdeC. Pregúntame sobre pagos, estado de cuenta, horarios, créditos o calendario escolar y haré lo posible por orientarte."
+        "Puedo ayudarte con pagos, créditos, horarios, calendario, estado de cuenta y contacto escolar. Pregunta algo específico 😉.",
+        "Soy el asistente virtual de trámites UAdeC. Dime si tu duda es sobre pagos, horarios, créditos, calendarios o contacto con Escolar."
     ],
     "desconocido": [
-        "No estoy seguro de cómo ayudarte con eso. ¿Puedes explicarlo con otras palabras o mencionar si es sobre pagos, horarios, créditos o calendario?",
-        "Mmm… esa parte no la tengo registrada. Intenta decirme si tu duda es sobre pagos, créditos, horarios, calendario escolar o contacto con Escolar."
+        "No estoy seguro de cómo ayudarte con eso. ¿Puedes explicarlo con más detalle?",
+        "Mmm… no entiendo esa parte. ¿Tu duda es sobre pagos, créditos, horario, calendario o estado de cuenta?"
     ],
 }
 
 
 # ============================================================
-#   DETECCIÓN DE INTENT FALSO (REGLAS SIMPLES)
-#   LUEGO SE REEMPLAZARÁ POR EL MODELO REAL
+#   DETECCIÓN DE INTENTS (MEJORADA: PALABRAS CLAVE)
 # ============================================================
 def detectar_intent_falso(texto_usuario: str) -> str:
-    """
-    Asigna una 'intención' falsa usando reglas súper simples.
-    Más adelante, esta función se reemplazará por una
-    predicción real basada en modelo ML.
-    """
     texto = texto_usuario.lower()
 
-    if any(p in texto for p in ["hola", "buenas", "qué onda", "buen dia", "buen día", "hey"]):
+    # ---- SALUDO ----
+    if any(p in texto for p in ["hola", "buenas", "qué onda", "que onda", "hey", "buen día", "buen dia"]):
         return "saludo"
 
-    if any(p in texto for p in ["adiós", "bye", "nos vemos", "hasta luego", "gracias, eso es todo"]):
+    # ---- DESPEDIDA ----
+    if any(p in texto for p in ["adios", "adiós", "bye", "hasta luego", "nos vemos", "gracias eso es todo"]):
         return "despedida"
 
-    if any(p in texto for p in ["pagar semestre", "pago semestre", "colegiatura", "inscripción", "inscripcion"]):
+    # ---- PAGO DE SEMESTRE / REINSCRIPCIÓN ----
+    if ("pago" in texto or "pagar" in texto or "colegiatura" in texto) and \
+       ("semestre" in texto or "inscripción" in texto or "inscripcion" in texto or "reinscripcion" in texto):
         return "pago_semestre"
 
-    if any(p in texto for p in ["crédito educativo", "credito educativo", "créditos educativos", "financiamiento", "prestamo para estudiar", "beca crédito"]):
+    # ---- CRÉDITOS EDUCATIVOS ----
+    if ("crédito" in texto or "credito" in texto or "financiamiento" in texto or "préstamo" in texto or "prestamo" in texto) and \
+       ("educativo" in texto or "beca" in texto or "estudiantil" in texto):
         return "solicitar_creditos_educativos"
 
-    if any(p in texto for p in ["cuota de mantenimiento", "mantenimiento", "cuota escolar", "cuota anual"]):
+    # ---- CUOTA DE MANTENIMIENTO ----
+    if ("cuota" in texto or "mantenimiento" in texto) and ("pago" in texto or "pagar" in texto):
         return "pago_cuota_mantenimiento"
 
-    if any(p in texto for p in ["estado de cuenta", "cuánto debo", "cuanto debo", "saldo pendiente", "adeudo"]):
+    # ---- ESTADO DE CUENTA ----
+    if ("estado" in texto and "cuenta" in texto) or \
+       ("adeudo" in texto) or \
+       ("saldo pendiente" in texto):
         return "consulta_estado_cuenta"
 
-    if any(p in texto for p in ["horario", "selección de horario", "seleccion de horario", "inscribir materias", "cargar materias", "clases"]):
+    # ---- HORARIO / INSCRIPCIÓN DE MATERIAS ----
+    if ("horario" in texto) or \
+       ("inscribir" in texto and "materias" in texto) or \
+       ("cargar" in texto and "clases" in texto):
         return "ayuda_horario"
 
-    if any(p in texto for p in ["calendario escolar", "fechas importantes", "fechas de pago", "cuando inicia el semestre", "cuando empieza el semestre"]):
+    # ---- CALENDARIO ESCOLAR ----
+    if ("calendario" in texto) or \
+       ("fechas importantes" in texto) or \
+       ("cuando inicia" in texto and "semestre" in texto):
         return "consulta_calendario_escolar"
 
-    if any(p in texto for p in ["créditos escolares", "creditos escolares", "créditos acumulados", "avance curricular", "porcentaje de la carrera"]):
+    # ---- CRÉDITOS ESCOLARES ----
+    if ("créditos" in texto or "creditos" in texto or "avance" in texto) and \
+       ("escolares" in texto or "curricular" in texto or "plan de estudios" in texto):
         return "consulta_creditos_escolares"
 
-    if any(p in texto for p in ["contacto escolar", "correo escolar", "teléfono escolar", "telefono escolar", "donde pregunto", "ventanilla"]):
+    # ---- CONTACTO ESCOLAR ----
+    if ("contacto" in texto or "correo" in texto or "teléfono" in texto or "telefono" in texto) and \
+       ("escolar" in texto or "ventanilla" in texto):
         return "info_contacto_escolar"
 
-    if any(p in texto for p in ["ayuda", "qué puedes hacer", "que puedes hacer", "no sé qué preguntar", "no se que preguntar"]):
+    # ---- AYUDA GENERAL ----
+    if "ayuda" in texto:
         return "ayuda_general"
 
+    # ---- SI NO COINCIDE NADA ----
     return "desconocido"
 
 
+# ============================================================
+#   RESPUESTAS
+# ============================================================
 def obtener_respuesta(intent: str) -> str:
-    """
-    Elige una respuesta aleatoria de la lista de respuestas para ese intent.
-    """
     respuestas = FAKE_INTENTS.get(intent, FAKE_INTENTS["desconocido"])
     return random.choice(respuestas)
 
 
 # ============================================================
-#   (FUTURO) INTEGRACIÓN CON MODELO REAL
+#   FUTURO: INTEGRAR MODELO REAL
 # ============================================================
-USAR_MODELO_REAL = False  # Cambiar a True cuando A tenga modelo.pkl listo
-
+USAR_MODELO_REAL = False
 
 def cargar_modelo_real():
-    """
-    FUTURO:
-    Aquí se cargará el modelo entrenado (modelo.pkl)
-    """
-    # global modelo, vectorizer, tags
-    # with open("models/modelo.pkl", "rb") as f:
-    #     data = pickle.load(f)
-    # modelo = data["model"]
-    # vectorizer = data["vectorizer"]
-    # tags = data["tags"]
     pass
 
-
 def predecir_intent_real(texto_usuario: str) -> str:
-    """
-    FUTURO:
-    Usará el modelo cargado para predecir el intent.
-    """
-    # X = vectorizer.transform([texto_usuario])
-    # pred = modelo.predict(X)[0]
-    # return pred
     return "desconocido"
 
 
@@ -150,10 +147,10 @@ def predecir_intent_real(texto_usuario: str) -> str:
 def main():
     print("================================================")
     print("   CHATBOT DE TRÁMITES - UNIVERSIDAD AUTÓNOMA   ")
-    print("                 DE COAHUILA (UAdeC)            ")
+    print("               DE COAHUILA (UAdeC)              ")
     print("================================================")
-    print("Puedo orientarte en temas de pagos, créditos,")
-    print("horarios, calendario escolar y contacto con Escolar.")
+    print("Puedo orientarte en pagos, créditos educativos,")
+    print("estado de cuenta, horarios, calendario y escolar.")
     print("Escribe 'salir' para terminar.\n")
 
     if USAR_MODELO_REAL:
@@ -171,8 +168,7 @@ def main():
         else:
             intent = detectar_intent_falso(texto_usuario)
 
-        respuesta = obtener_respuesta(intent)
-        print(f"Chatbot: {respuesta}")
+        print("Chatbot:", obtener_respuesta(intent))
 
 
 if __name__ == "__main__":
