@@ -72,7 +72,7 @@ FAKE_INTENTS = {
     ],
     "consulta_calendario_universitario": [
         "Puedes consultar el calendario universitario en la página oficial de la UAdeC, sección Acerca De y en Calendario.",
-        "El calendario escolar incluye pagos, exámenes e inicios de semestre. Está disponible en la página oficial de la UAdeC."
+        "El calendario universitario incluye pagos, exámenes e inicios de semestre. Está disponible en la página oficial de la UAdeC."
     #],
     #"consulta_creditos_escolares": [
     #    "Tus créditos escolares están en tu historial académico dentro del portal de alumnos.",
