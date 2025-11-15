@@ -1,70 +1,63 @@
 import json
+import os
+import string
+import pickle
+
+import numpy as np
 import nltk
 from nltk.stem import WordNetLemmatizer
-import string
-import os  # <-- Importamos la librería OS
+from sklearn.linear_model import LogisticRegression
 
-# --- INICIO DE LA MODIFICACIÓN (Solución 2) ---
-# Obtiene la ruta absoluta de la carpeta donde está ESTE SCRIPT
+
+#  CONFIGURACIÓN DE RUTAS
 try:
-    # __file__ existe si ejecutas el script directamente
     ruta_script = os.path.dirname(os.path.abspath(__file__))
 except NameError:
-    # Si __file__ no está definido (ej. en un intérprete interactivo)
-    # usa el directorio de trabajo actual
     ruta_script = os.path.abspath(os.getcwd())
 
-# Crea la ruta completa al archivo intents.json
-ruta_json = os.path.join(ruta_script, 'intents.json')
-# --- FIN DE LA MODIFICACIÓN ---
+ruta_json = os.path.join(ruta_script, "intents.json")
+ruta_models = os.path.join(ruta_script, "models")
+os.makedirs(ruta_models, exist_ok=True)
+ruta_modelo_pkl = os.path.join(ruta_models, "modelo.pkl")
 
-
-# 1. Inicializar el Lematizador (para reducir palabras a su raíz)
+#  CARGAR JSON
 lemmatizer = WordNetLemmatizer()
 
-# 2. Cargar el archivo JSON
 try:
-    # Usa la nueva variable 'ruta_json'
-    with open(ruta_json, 'r', encoding='utf-8') as file:
+    with open(ruta_json, "r", encoding="utf-8") as file:
         datos = json.load(file)
 except FileNotFoundError:
-    print(f"Error: No se encontró el archivo 'intents.json' en la ruta:")
+    print("Error: No se encontró el archivo 'intents.json' en la ruta:")
     print(ruta_json)
-    print("Asegúrate de haberlo creado en la misma carpeta que train.py.")
-    exit()
+    raise SystemExit
 
-# 3. Listas para almacenar nuestros datos procesados
-palabras = []       # Todas las palabras (lematizadas)
-clases = []         # Todas las etiquetas (intenciones)
-documentos = []     # Pares (palabras, etiqueta)
+palabras = []    # vocabulario
+clases = []      # etiquetas (intents)
+documentos = []  # lista de (tokens, etiqueta)
 
 print("Iniciando procesamiento de texto...")
 
-# 4. Recorrer el JSON
-for intencion in datos['intenciones']:
-    for patron in intencion['patrones']:
-        
-        # 4.1. Tokenizar: Separar la oración en palabras
-        lista_palabras = nltk.word_tokenize(patron)
-        
-        # 4.2. Lematizar y quitar puntuación
-        palabras_procesadas = []
-        for palabra in lista_palabras:
-            # Si no es un signo de puntuación
-            if palabra not in string.punctuation:
-                # Convertir a minúscula y lematizar (reducir a raíz)
-                palabras_procesadas.append(lemmatizer.lemmatize(palabra.lower()))
-        
-        # 4.3. Agregar a nuestras listas
-        palabras.extend(palabras_procesadas)
-        documentos.append((palabras_procesadas, intencion['etiqueta']))
-        
-        # 4.4. Agregar la etiqueta (si no está ya)
-        if intencion['etiqueta'] not in clases:
-            clases.append(intencion['etiqueta'])
+for intencion in datos["intenciones"]:
+    etiqueta = intencion["etiqueta"]
 
-# 5. Limpieza final: Quitar duplicados y ordenar
-# Usamos set() para quitar duplicados automáticamente
+    # registrar etiqueta si no está
+    if etiqueta not in clases:
+        clases.append(etiqueta)
+
+    for patron in intencion["patrones"]:
+        # tokenizar
+        tokens = nltk.word_tokenize(patron)
+
+        # limpiar y lematizar
+        tokens_limpios = []
+        for t in tokens:
+            if t not in string.punctuation:
+                tokens_limpios.append(lemmatizer.lemmatize(t.lower()))
+
+        palabras.extend(tokens_limpios)
+        documentos.append((tokens_limpios, etiqueta))
+
+# quitar duplicados y ordenar
 palabras = sorted(list(set(palabras)))
 clases = sorted(list(set(clases)))
 
@@ -72,8 +65,51 @@ print("-" * 50)
 print(f"Proceso completado.")
 print(f" {len(documentos)} documentos (patrones) encontrados.")
 print(f" {len(clases)} clases (etiquetas) encontradas: {clases}")
-print(f" {len(palabras)} palabras únicas (vocabulario) encontradas:")
-print(palabras)
+print(f" {len(palabras)} palabras únicas (vocabulario) encontradas.")
 print("-" * 50)
 
+#  CREAR VECTORES
+def crear_bolsa_de_palabras(tokens, vocabulario):
+    """Convierte una lista de tokens en un vector BoW según el vocabulario."""
+    bag = []
+    for w in vocabulario:
+        bag.append(1 if w in tokens else 0)
+    return np.array(bag, dtype=np.float32)
 
+X = []
+y = []
+
+for tokens, etiqueta in documentos:
+    bow = crear_bolsa_de_palabras(tokens, palabras)
+    X.append(bow)
+
+    # usamos índice de la etiqueta como clase numérica
+    indice_clase = clases.index(etiqueta)
+    y.append(indice_clase)
+
+X = np.array(X)
+y = np.array(y)
+
+print("Tamaño de X (patrones):", X.shape)
+print("Tamaño de y (clases):  ", y.shape)
+
+#  ENTRENAR MODELO
+print("\nEntrenando modelo de clasificación (LogisticRegression)...")
+
+modelo = LogisticRegression(max_iter=1000)
+modelo.fit(X, y)
+
+print("Entrenamiento completado.")
+
+#  GUARDAR MODELO
+data = {
+    "model": modelo,
+    "palabras": palabras,
+    "clases": clases
+}
+
+with open(ruta_modelo_pkl, "wb") as f:
+    pickle.dump(data, f)
+
+print("\nModelo guardado en:", ruta_modelo_pkl)
+print("¡Listo! Ahora puedes usar este modelo desde main.py.")
