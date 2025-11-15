@@ -18,7 +18,7 @@
       ],
       "respuestas": [
         "¡Hola! Soy el asistente virtual de la Universidad Autónoma de Coahuila. ¿En qué trámite te ayudo hoy?",
-        "Bienvenido al chatbot de la UAdeC 🙌. Cuéntame, ¿qué trámite necesitas hacer?",
+        "Bienvenido al chatbot de la UAdeC . Cuéntame, ¿qué trámite necesitas hacer?",
         "Hola, con gusto te apoyo con trámites de pagos, horarios, créditos, calendario y escolar. ¿Qué necesitas?"
       ]
     },
@@ -40,7 +40,7 @@
       "respuestas": [
         "¡Hasta luego! Espero haberte ayudado con tus trámites de la UAdeC.",
         "Gracias por usar el asistente de la Universidad Autónoma de Coahuila. ¡Que tengas un excelente día!",
-        "Fue un gusto ayudarte 😊. Si tienes más dudas de trámites, aquí estaré."
+        "Fue un gusto ayudarte. Si tienes más dudas de trámites, aquí estaré."
       ]
     },
     {
@@ -63,28 +63,6 @@
         "Para pagar tu semestre en la UAdeC, entra al portal de alumnos, genera tu ficha de pago y cubre el monto en los bancos autorizados o mediante pago en línea.",
         "El pago del semestre o reinscripción se realiza generando una referencia en el sistema de la UAdeC. Revisa el calendario escolar para conocer las fechas límite.",
         "Debes acceder al portal institucional con tu matrícula, ir a la sección de pagos o reinscripción y generar la ficha. Con esa referencia puedes pagar en línea o en banco."
-      ]
-    },
-    {
-      "etiqueta": "solicitar_creditos_educativos",
-      "patrones": [
-        "Cómo solicito un crédito educativo",
-        "La UAdeC tiene créditos educativos",
-        "Quiero un préstamo para pagar la escuela",
-        "Qué opciones de financiamiento hay",
-        "Crédito educativo para alumnos",
-        "Cómo tramito un crédito estudiantil",
-        "Hay préstamos o créditos para reinscripción",
-        "Dónde pido información sobre créditos",
-        "Requisitos para crédito educativo",
-        "Información de financiamiento estudiantil",
-        "Crédito para pagar el semestre",
-        "Ayuda con trámites de crédito o financiamiento"
-      ],
-      "respuestas": [
-        "Los créditos educativos se gestionan normalmente a través de Servicios Estudiantiles o Finanzas. Revisa la información en la página de la UAdeC o en tu facultad.",
-        "Para solicitar un crédito educativo, revisa si hay convocatorias vigentes y prepara documentos como historial académico, identificación y comprobante de ingresos.",
-        "La UAdeC puede tener convenios de financiamiento con instituciones externas. Te recomiendo acudir a Servicios Estudiantiles o al área de Finanzas de tu facultad para más detalles."
       ]
     },
     {
@@ -173,28 +151,6 @@
         "El calendario escolar de la UAdeC está disponible en la página oficial de la universidad, en la sección de Calendario o Fechas importantes.",
         "Puedes consultar el calendario escolar buscando en la web institucional de la UAdeC o en la página específica de tu facultad.",
         "En el calendario escolar encontrarás fechas de inicio y fin de semestre, periodos de pago, reinscripción y exámenes. Es importante revisarlo con frecuencia."
-      ]
-    },
-    {
-      "etiqueta": "consulta_creditos_escolares",
-      "patrones": [
-        "Cuántos créditos llevo",
-        "Cómo veo mis créditos escolares",
-        "Dónde consulto mis créditos acumulados",
-        "No sé cuántos créditos me faltan",
-        "Quiero ver mi avance de plan de estudios",
-        "Cuántos créditos necesito para titularme",
-        "Mis créditos no se ven completos",
-        "Créditos acumulados UAdeC",
-        "Historial académico créditos",
-        "Cómo revisar mi avance curricular",
-        "Créditos por materia",
-        "Ayuda con mis créditos escolares"
-      ],
-      "respuestas": [
-        "Tus créditos escolares se pueden consultar en el portal de alumnos, en el historial académico o en la sección de avance de plan de estudios.",
-        "Para revisar tus créditos, entra al sistema institucional de la UAdeC y busca tu historial académico. Ahí verás las materias cursadas y los créditos acumulados.",
-        "Si notas algún crédito faltante o un error en tu avance, acude al departamento escolar de tu facultad para que revisen tu situación."
       ]
     },
     {
